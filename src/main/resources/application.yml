@@ -1,0 +1,76 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /video
+
+ffmpeg:
+  ffmpegFile: classpath:/static/ffmpeg #ffmpeg可执行文件路径
+  outputVideoSuffix: .mp4 #输出视频的后缀名
+  outputCoverSuffix: .jpg #输出缩略图的后缀名
+
+# 此连接更改不得上传
+spring:
+  # springboot2.6.3的默认mvc路径改动了
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/video?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 12345678
+
+  # 文件上传大小
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+
+mybatis-plus:
+  # 开启mybatisPlus日志（输出到控制台）
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  api-docs:
+    enabled: true
+
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    #    org.apache.ibatis.logging.stdout.StdOutImpl 控制台打印sql语句方便调试sql语句执行错误
+    #    org.apache.ibatis.logging.log4j2.Log4j2Impl:这个不在控制台打印查询结果,但是在log4j中打印
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 打印sql，仅限开发环境
+logging:
+  level:
+    com.example.videoframe.mapper.*: debug
+
+pagehelper:
+  supportMethodsArguments: true
+  # helperDialect：指定分页插件使用哪种方言
+  helperDialect: mysql
+  # reasonable：分页合理化参数，默认值为false。当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页
+  reasonable: true
+  # page-size-zero：默认值为 false，当该参数设置为 true 时，如果 pageSize=0 或者 RowBounds.limit = 0 就会查询出全部的结果
+  page-size-zero: true
+
+file:
+  uploadFolder: /Users/sujinwang/my/
+  videoPhotoFolder: /Users/sujinwang/my/photo/
+  # 视频剪切精度，越大剪出的视频越多
+  accuracy: 3
+
+swagger:
+  production: false
+  basic:
+    enable: false

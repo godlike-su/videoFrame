@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.videoframe.mapper.VideoinfoMapper">
+  <resultMap id="BaseResultMap" type="com.example.videoframe.entity.Videoinfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="descri" jdbcType="VARCHAR" property="descri" />
+    <result column="attachGroupId" jdbcType="VARCHAR" property="attachgroupid" />
+    <result column="userInfoId" jdbcType="INTEGER" property="userinfoid" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="attgroupid1" jdbcType="VARCHAR" property="attgroupid1" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, descri, attachGroupId, userInfoId, createTime, status, attgroupid1
+  </sql>
+  <select id="selectByExample" parameterType="com.example.videoframe.mapper.example.VideoinfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from videoInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from videoInfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from videoInfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.videoframe.mapper.example.VideoinfoExample">
+    delete from videoInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.videoframe.entity.Videoinfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into videoInfo (name, descri, attachGroupId, 
+      userInfoId, createTime, status, 
+      attgroupid1)
+    values (#{name,jdbcType=VARCHAR}, #{descri,jdbcType=VARCHAR}, #{attachgroupid,jdbcType=VARCHAR}, 
+      #{userinfoid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, 
+      #{attgroupid1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.videoframe.entity.Videoinfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into videoInfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="descri != null">
+        descri,
+      </if>
+      <if test="attachgroupid != null">
+        attachGroupId,
+      </if>
+      <if test="userinfoid != null">
+        userInfoId,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="attgroupid1 != null">
+        attgroupid1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descri != null">
+        #{descri,jdbcType=VARCHAR},
+      </if>
+      <if test="attachgroupid != null">
+        #{attachgroupid,jdbcType=VARCHAR},
+      </if>
+      <if test="userinfoid != null">
+        #{userinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="attgroupid1 != null">
+        #{attgroupid1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.videoframe.mapper.example.VideoinfoExample" resultType="java.lang.Long">
+    select count(*) from videoInfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update videoInfo
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.descri != null">
+        descri = #{record.descri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attachgroupid != null">
+        attachGroupId = #{record.attachgroupid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userinfoid != null">
+        userInfoId = #{record.userinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attgroupid1 != null">
+        attgroupid1 = #{record.attgroupid1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update videoInfo
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      descri = #{record.descri,jdbcType=VARCHAR},
+      attachGroupId = #{record.attachgroupid,jdbcType=VARCHAR},
+      userInfoId = #{record.userinfoid,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=VARCHAR},
+      attgroupid1 = #{record.attgroupid1,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.videoframe.entity.Videoinfo">
+    update videoInfo
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descri != null">
+        descri = #{descri,jdbcType=VARCHAR},
+      </if>
+      <if test="attachgroupid != null">
+        attachGroupId = #{attachgroupid,jdbcType=VARCHAR},
+      </if>
+      <if test="userinfoid != null">
+        userInfoId = #{userinfoid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="attgroupid1 != null">
+        attgroupid1 = #{attgroupid1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.videoframe.entity.Videoinfo">
+    update videoInfo
+    set name = #{name,jdbcType=VARCHAR},
+      descri = #{descri,jdbcType=VARCHAR},
+      attachGroupId = #{attachgroupid,jdbcType=VARCHAR},
+      userInfoId = #{userinfoid,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      attgroupid1 = #{attgroupid1,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
